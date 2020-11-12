@@ -1,0 +1,257 @@
+﻿#pragma once
+
+namespace QuanLyBanHang {
+
+	using namespace System;
+	using namespace System::ComponentModel;
+	using namespace System::Collections;
+	using namespace System::Windows::Forms;
+	using namespace System::Data;
+	using namespace System::Drawing;
+	using namespace System::Data::SqlClient;
+	/// <summary>
+	/// Summary for Goods
+	/// </summary>
+	public ref class Goods : public System::Windows::Forms::Form
+	{
+	public:
+		Goods(void)
+		{
+			InitializeComponent();
+			//
+			//TODO: Add the constructor code here
+			//
+		}
+
+	protected:
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		~Goods()
+		{
+			if (components)
+			{
+				delete components;
+			}
+		}
+	private: System::Windows::Forms::Panel^ panel_Goods;
+	private: System::Windows::Forms::ListView^ listView_Goods;
+
+	private: System::Windows::Forms::ColumnHeader^ GoodName;
+	private: System::Windows::Forms::ColumnHeader^ GoodsCode;
+
+
+	private: System::Windows::Forms::ColumnHeader^ LoaiHang;
+	private: System::Windows::Forms::ColumnHeader^ Amount;
+	private: System::Windows::Forms::ColumnHeader^ ImportPrice;
+	private: System::Windows::Forms::ColumnHeader^ ExportPrice;
+
+
+
+
+	private: System::Windows::Forms::Button^ button_Goods_Exit;
+	private: System::Windows::Forms::Button^ button_Goods_Edit;
+	private: System::Windows::Forms::Button^ button_Goods_Delete;
+	private: System::Windows::Forms::Button^ button_Goods_Insert;
+	private: System::Windows::Forms::ComboBox^ comboBox_Goods_Sort;
+
+	protected:
+
+
+
+	protected:
+
+	private:
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		System::ComponentModel::Container ^components;
+
+#pragma region Windows Form Designer generated code
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		void InitializeComponent(void)
+		{
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Goods::typeid));
+			this->panel_Goods = (gcnew System::Windows::Forms::Panel());
+			this->comboBox_Goods_Sort = (gcnew System::Windows::Forms::ComboBox());
+			this->button_Goods_Exit = (gcnew System::Windows::Forms::Button());
+			this->button_Goods_Edit = (gcnew System::Windows::Forms::Button());
+			this->button_Goods_Delete = (gcnew System::Windows::Forms::Button());
+			this->button_Goods_Insert = (gcnew System::Windows::Forms::Button());
+			this->listView_Goods = (gcnew System::Windows::Forms::ListView());
+			this->GoodName = (gcnew System::Windows::Forms::ColumnHeader());
+			this->GoodsCode = (gcnew System::Windows::Forms::ColumnHeader());
+			this->LoaiHang = (gcnew System::Windows::Forms::ColumnHeader());
+			this->Amount = (gcnew System::Windows::Forms::ColumnHeader());
+			this->ImportPrice = (gcnew System::Windows::Forms::ColumnHeader());
+			this->ExportPrice = (gcnew System::Windows::Forms::ColumnHeader());
+			this->panel_Goods->SuspendLayout();
+			this->SuspendLayout();
+			// 
+			// panel_Goods
+			// 
+			this->panel_Goods->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel_Goods.BackgroundImage")));
+			this->panel_Goods->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->panel_Goods->Controls->Add(this->comboBox_Goods_Sort);
+			this->panel_Goods->Controls->Add(this->button_Goods_Exit);
+			this->panel_Goods->Controls->Add(this->button_Goods_Edit);
+			this->panel_Goods->Controls->Add(this->button_Goods_Delete);
+			this->panel_Goods->Controls->Add(this->button_Goods_Insert);
+			this->panel_Goods->Controls->Add(this->listView_Goods);
+			this->panel_Goods->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->panel_Goods->Location = System::Drawing::Point(0, 0);
+			this->panel_Goods->Name = L"panel_Goods";
+			this->panel_Goods->Size = System::Drawing::Size(773, 402);
+			this->panel_Goods->TabIndex = 0;
+			// 
+			// comboBox_Goods_Sort
+			// 
+			this->comboBox_Goods_Sort->BackColor = System::Drawing::Color::Silver;
+			this->comboBox_Goods_Sort->FormattingEnabled = true;
+			this->comboBox_Goods_Sort->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
+				L"Sort By Amount", L"Sort By Export Price",
+					L"Sort By Import Price", L"Sort By Name"
+			});
+			this->comboBox_Goods_Sort->Location = System::Drawing::Point(640, 18);
+			this->comboBox_Goods_Sort->Name = L"comboBox_Goods_Sort";
+			this->comboBox_Goods_Sort->Size = System::Drawing::Size(121, 21);
+			this->comboBox_Goods_Sort->Sorted = true;
+			this->comboBox_Goods_Sort->TabIndex = 5;
+			this->comboBox_Goods_Sort->Text = L"None";
+			// 
+			// button_Goods_Exit
+			// 
+			this->button_Goods_Exit->Location = System::Drawing::Point(661, 276);
+			this->button_Goods_Exit->Name = L"button_Goods_Exit";
+			this->button_Goods_Exit->Size = System::Drawing::Size(75, 23);
+			this->button_Goods_Exit->TabIndex = 4;
+			this->button_Goods_Exit->Text = L"Exit";
+			this->button_Goods_Exit->UseVisualStyleBackColor = true;
+			// 
+			// button_Goods_Edit
+			// 
+			this->button_Goods_Edit->Location = System::Drawing::Point(661, 228);
+			this->button_Goods_Edit->Name = L"button_Goods_Edit";
+			this->button_Goods_Edit->Size = System::Drawing::Size(75, 23);
+			this->button_Goods_Edit->TabIndex = 3;
+			this->button_Goods_Edit->Text = L"Edit";
+			this->button_Goods_Edit->UseVisualStyleBackColor = true;
+			// 
+			// button_Goods_Delete
+			// 
+			this->button_Goods_Delete->Location = System::Drawing::Point(661, 172);
+			this->button_Goods_Delete->Name = L"button_Goods_Delete";
+			this->button_Goods_Delete->Size = System::Drawing::Size(75, 23);
+			this->button_Goods_Delete->TabIndex = 2;
+			this->button_Goods_Delete->Text = L"Delete";
+			this->button_Goods_Delete->UseVisualStyleBackColor = true;
+			// 
+			// button_Goods_Insert
+			// 
+			this->button_Goods_Insert->BackColor = System::Drawing::Color::Transparent;
+			this->button_Goods_Insert->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Center;
+			this->button_Goods_Insert->Location = System::Drawing::Point(661, 125);
+			this->button_Goods_Insert->Name = L"button_Goods_Insert";
+			this->button_Goods_Insert->Size = System::Drawing::Size(75, 23);
+			this->button_Goods_Insert->TabIndex = 1;
+			this->button_Goods_Insert->Text = L"Insert";
+			this->button_Goods_Insert->UseVisualStyleBackColor = false;
+			this->button_Goods_Insert->Click += gcnew System::EventHandler(this, &Goods::button_Goods_Insert_Click);
+			// 
+			// listView_Goods
+			// 
+			this->listView_Goods->BackColor = System::Drawing::Color::LightGray;
+			this->listView_Goods->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->listView_Goods->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(6) {
+				this->GoodName, this->GoodsCode,
+					this->LoaiHang, this->Amount, this->ImportPrice, this->ExportPrice
+			});
+			this->listView_Goods->ForeColor = System::Drawing::SystemColors::WindowFrame;
+			this->listView_Goods->FullRowSelect = true;
+			this->listView_Goods->GridLines = true;
+			this->listView_Goods->HideSelection = false;
+			this->listView_Goods->Location = System::Drawing::Point(14, 13);
+			this->listView_Goods->Name = L"listView_Goods";
+			this->listView_Goods->Size = System::Drawing::Size(607, 371);
+			this->listView_Goods->TabIndex = 0;
+			this->listView_Goods->UseCompatibleStateImageBehavior = false;
+			this->listView_Goods->View = System::Windows::Forms::View::Details;
+			// 
+			// GoodName
+			// 
+			this->GoodName->Text = L"GoodName";
+			this->GoodName->Width = 234;
+			// 
+			// GoodsCode
+			// 
+			this->GoodsCode->Text = L"GoodsCode";
+			this->GoodsCode->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->GoodsCode->Width = 75;
+			// 
+			// LoaiHang
+			// 
+			this->LoaiHang->Text = L"Loại Hàng";
+			this->LoaiHang->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->LoaiHang->Width = 77;
+			// 
+			// Amount
+			// 
+			this->Amount->Text = L"Amount";
+			this->Amount->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->Amount->Width = 72;
+			// 
+			// ImportPrice
+			// 
+			this->ImportPrice->Text = L"Import Price";
+			this->ImportPrice->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->ImportPrice->Width = 72;
+			// 
+			// ExportPrice
+			// 
+			this->ExportPrice->Text = L"Export Price";
+			this->ExportPrice->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->ExportPrice->Width = 74;
+			// 
+			// Goods
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"$this.BackgroundImage")));
+			this->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
+			this->ClientSize = System::Drawing::Size(773, 402);
+			this->Controls->Add(this->panel_Goods);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
+			this->Name = L"Goods";
+			this->Text = L"Warehoue";
+			this->panel_Goods->ResumeLayout(false);
+			this->ResumeLayout(false);
+
+		}
+#pragma endregion
+	private: System::Void button_Goods_Insert_Click(System::Object^ sender, System::EventArgs^ e)// button goods insert
+	{
+		SqlConnection^ connect = gcnew SqlConnection("Data Source = DESKTOP-F4R2928\\MSSQLSERVER01;Initial Catalog = QuanLyBanHang;Integrated Security = true");
+		connect->Open();
+
+		SqlCommand^ command = gcnew SqlCommand("SELECT Tenhang, Mahang, Tenloaihang, Soluongton, Gianhap, Giaxuat FROM Mathang, Loaihang WHERE Mathang.MaLoaihang = Loaihang.Maloaihang", connect);
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter(command);
+		DataSet^ dataset = gcnew DataSet();
+		adapter->Fill(dataset, "tmptable");
+		connect->Close();
+		DataTable^ table = dataset->Tables["tmptable"];
+
+		for (int i = 0; i < table->Rows->Count; i++)
+		{
+			listView_Goods->Items->Add(table->Rows[i]->ItemArray[0]->ToString());
+			for (int j = 1; j < 6; j++)
+			{
+				listView_Goods->Items[i]->SubItems->Add(table->Rows[i]->ItemArray[j]->ToString());
+			}
+			
+		}
+	}
+};
+}

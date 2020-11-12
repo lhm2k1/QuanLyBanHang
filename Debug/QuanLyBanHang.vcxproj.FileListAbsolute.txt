@@ -1,0 +1,17 @@
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\x64\Debug\QuanLyBanHang.vcxprojAssemblyReference.cache
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\x64\Debug\QuanLyBanHang.Loged_in.resources
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\x64\Debug\QuanLyBanHang.Log_in.resources
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\x64\Debug\QuanLyBanHang.vcxproj.GenerateResource.cache
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\x64\Debug\QuanLyBanHang.vcxproj.CopyComplete
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\x64\Debug\QuanLyBanHang.exe
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\x64\Debug\QuanLyBanHang.pdb
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\x64\Debug\Bunifu_UI_v1.52.dll
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.vcxprojAssemblyReference.cache
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.Log_in.resources
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.vcxproj.GenerateResource.cache
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.vcxproj.CopyComplete
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.exe
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.pdb
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\Bunifu_UI_v1.52.dll
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.Loged_in.resources
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.Goods.resources
