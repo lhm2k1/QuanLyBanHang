@@ -1,5 +1,6 @@
 ﻿#pragma once
-
+#include <string>
+#include <string>
 namespace QuanLyBanHang {
 
 	using namespace System;
@@ -9,6 +10,7 @@ namespace QuanLyBanHang {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Data::SqlClient;
+	using namespace std;
 	/// <summary>
 	/// Summary for Goods
 	/// </summary>
@@ -39,9 +41,10 @@ namespace QuanLyBanHang {
 
 	private: System::Windows::Forms::ColumnHeader^ GoodName;
 	private: System::Windows::Forms::ColumnHeader^ GoodsCode;
+	private: System::Windows::Forms::ColumnHeader^ Category;
 
 
-	private: System::Windows::Forms::ColumnHeader^ LoaiHang;
+
 	private: System::Windows::Forms::ColumnHeader^ Amount;
 	private: System::Windows::Forms::ColumnHeader^ ImportPrice;
 	private: System::Windows::Forms::ColumnHeader^ ExportPrice;
@@ -54,6 +57,7 @@ namespace QuanLyBanHang {
 	private: System::Windows::Forms::Button^ button_Goods_Delete;
 	private: System::Windows::Forms::Button^ button_Goods_Insert;
 	private: System::Windows::Forms::ComboBox^ comboBox_Goods_Sort;
+
 
 	protected:
 
@@ -84,7 +88,7 @@ namespace QuanLyBanHang {
 			this->listView_Goods = (gcnew System::Windows::Forms::ListView());
 			this->GoodName = (gcnew System::Windows::Forms::ColumnHeader());
 			this->GoodsCode = (gcnew System::Windows::Forms::ColumnHeader());
-			this->LoaiHang = (gcnew System::Windows::Forms::ColumnHeader());
+			this->Category = (gcnew System::Windows::Forms::ColumnHeader());
 			this->Amount = (gcnew System::Windows::Forms::ColumnHeader());
 			this->ImportPrice = (gcnew System::Windows::Forms::ColumnHeader());
 			this->ExportPrice = (gcnew System::Windows::Forms::ColumnHeader());
@@ -121,6 +125,7 @@ namespace QuanLyBanHang {
 			this->comboBox_Goods_Sort->Sorted = true;
 			this->comboBox_Goods_Sort->TabIndex = 5;
 			this->comboBox_Goods_Sort->Text = L"None";
+			this->comboBox_Goods_Sort->SelectedIndexChanged += gcnew System::EventHandler(this, &Goods::comboBox_Goods_Sort_SelectedIndexChanged);
 			// 
 			// button_Goods_Exit
 			// 
@@ -167,7 +172,7 @@ namespace QuanLyBanHang {
 			this->listView_Goods->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->listView_Goods->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(6) {
 				this->GoodName, this->GoodsCode,
-					this->LoaiHang, this->Amount, this->ImportPrice, this->ExportPrice
+					this->Category, this->Amount, this->ImportPrice, this->ExportPrice
 			});
 			this->listView_Goods->ForeColor = System::Drawing::SystemColors::WindowFrame;
 			this->listView_Goods->FullRowSelect = true;
@@ -191,11 +196,11 @@ namespace QuanLyBanHang {
 			this->GoodsCode->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
 			this->GoodsCode->Width = 75;
 			// 
-			// LoaiHang
+			// Category
 			// 
-			this->LoaiHang->Text = L"Loại Hàng";
-			this->LoaiHang->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->LoaiHang->Width = 77;
+			this->Category->Text = L"Category";
+			this->Category->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
+			this->Category->Width = 77;
 			// 
 			// Amount
 			// 
@@ -242,15 +247,53 @@ namespace QuanLyBanHang {
 		adapter->Fill(dataset, "tmptable");
 		connect->Close();
 		DataTable^ table = dataset->Tables["tmptable"];
-
 		for (int i = 0; i < table->Rows->Count; i++)
 		{
 			listView_Goods->Items->Add(table->Rows[i]->ItemArray[0]->ToString());
 			for (int j = 1; j < 6; j++)
-			{
 				listView_Goods->Items[i]->SubItems->Add(table->Rows[i]->ItemArray[j]->ToString());
+		}
+	}
+	private: System::Void comboBox_Goods_Sort_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e)
+	{
+		SqlConnection^ connect = gcnew SqlConnection("Data Source = DESKTOP-F4R2928\\MSSQLSERVER01;Initial Catalog = QuanLyBanHang;Integrated Security = true");
+		connect->Open();
+
+		SqlCommand^ command = gcnew SqlCommand("SELECT Tenhang, Mahang, Tenloaihang, Soluongton, Gianhap, Giaxuat FROM Mathang, Loaihang WHERE Mathang.MaLoaihang = Loaihang.Maloaihang", connect);
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter(command);
+		DataSet^ dataset = gcnew DataSet();
+		adapter->Fill(dataset, "tmptable");
+		connect->Close();
+		DataTable^ table = dataset->Tables["tmptable"];
+		if (comboBox_Goods_Sort->Text->ToString() == "Sort By Name")// bubblesort
+		{
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				for (int j = table->Rows->Count - 1; j > i; j--)
+				{
+					if(table->Rows[j]->ItemArray[0]->ToString()->CompareTo(table->Rows[j-1]->ItemArray[0]) > 0);
+					{
+						DataRow^ tmp = table->Rows[j];
+						for (int k = 0; k < 6; k++)
+							table->Rows[j]->ItemArray[k] = table->Rows[j-1]->ItemArray[k];
+						for (int k = 0; k < 6; k++)
+							table->Rows[j-1]->ItemArray[k] = tmp->ItemArray[k];							
+					}
+				}
 			}
-			
+				
+//			for(int i = 0; i < table->Rows->Count; i++)
+//				for (int j = 0; j < 6; j++)
+//					MessageBox::Show(table->Rows[i]->ItemArray[j]->ToString());
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				listView_Goods->Items->Add(table->Rows[i]->ItemArray[0]->ToString());
+				for (int j = 1; j < table->Columns->Count; j++)
+				{
+					listView_Goods->Items[i]->SubItems->Add(table->Rows[i]->ItemArray[j]->ToString());
+				}
+					
+			}
 		}
 	}
 };
