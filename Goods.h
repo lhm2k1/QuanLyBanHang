@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <string>
+#include <stdlib.h>
 #include <msclr\marshal_cppstd.h>
 #include "connect.h"
 namespace QuanLyBanHang {
@@ -185,6 +186,7 @@ namespace QuanLyBanHang {
 			this->listView_Goods->TabIndex = 0;
 			this->listView_Goods->UseCompatibleStateImageBehavior = false;
 			this->listView_Goods->View = System::Windows::Forms::View::Details;
+			this->listView_Goods->SelectedIndexChanged += gcnew System::EventHandler(this, &Goods::listView_Goods_SelectedIndexChanged);
 			// 
 			// GoodName
 			// 
@@ -294,15 +296,47 @@ namespace QuanLyBanHang {
 				}
 			}
 		}
-		goods *g = new goods();
-		//for (int i = 0; i < table->Rows->Count; i++)
+//		Mathang* g = new Mathang[table->Rows->Count];
+//		Mathang g;
+//		String^ s = "";
+//		g[0].set_Tenhang(marshal_as<string>(table->Rows[0]->ItemArray[0]->ToString()));//s = gcnew String(g.get_Tenhang().c_str());
+//			MessageBox::Show(s);
+
+//		g[0].set_Mahang(marshal_as<string>(table->Rows[0]->ItemArray[1]->ToString()));// s = gcnew String(g.get_Mahang().c_str());
+//			MessageBox::Show(s);
+
+//		g[0].set_Maloaihang(marshal_as<string>(table->Rows[0]->ItemArray[2]->ToString()));// s = gcnew String(g.get_Maloaihang().c_str());
+//			MessageBox::Show(s);
+
+//		g[0].set_Soluongton(atoi(marshal_as<string>(table->Rows[0]->ItemArray[3]->ToString()).c_str()));
+//			MessageBox::Show(g.get_Soluongton().ToString());
+
+//		g[0].set_Gianhap( atof(marshal_as<string>(table->Rows[0]->ItemArray[4]->ToString()).c_str()));
+//			MessageBox::Show(g.get_Gianhap().ToString());
+
+//		g[0].set_Giaxuat(atof(marshal_as<string>(table->Rows[0]->ItemArray[5]->ToString()).c_str()));
+//			MessageBox::Show(g.get_Giaxuat().ToString());
+//		string x = "";
+//		x += g[0].get_Tenhang() + " " + g[0].get_Mahang() + " " + g[0].get_Maloaihang() + marshal_as<string>(" " + g[0].get_Soluongton().ToString() ) + marshal_as<string>(" " + g[0].get_Gianhap().ToString()) + marshal_as<string>(" " + g[0].get_Giaxuat().ToString());
+//		String^ th = gcnew String(x.c_str());
+//		MessageBox::Show(th);
+		Mathang* g = new Mathang[table->Rows->Count];
+		string x = "";
+		for (int i = 0; i < table->Rows->Count; i++)
 		{
-			String^ name = gcnew String(table->Rows[0]->ItemArray[0]->ToString());
-			string n = marshal_as<string>(name);
-			g->head->set_Tenhang(n);
-			String^ m = gcnew String(g->head->get_Tenhang().c_str());
-			MessageBox::Show(m);
+			g[i].set_Tenhang(marshal_as<string>(table->Rows[i]->ItemArray[0]->ToString()));
+			g[i].set_Mahang(marshal_as<string>(table->Rows[i]->ItemArray[1]->ToString()));
+			g[i].set_Maloaihang(marshal_as<string>(table->Rows[i]->ItemArray[2]->ToString()));
+			g[i].set_Soluongton(atoi(marshal_as<string>(table->Rows[i]->ItemArray[3]->ToString()).c_str()));
+			g[i].set_Gianhap(atof(marshal_as<string>(table->Rows[i]->ItemArray[4]->ToString()).c_str()));
+			g[i].set_Giaxuat(atof(marshal_as<string>(table->Rows[i]->ItemArray[5]->ToString()).c_str()));
+
+			x += g[i].get_Tenhang() + " " + g[i].get_Mahang() + " " + g[i].get_Maloaihang() + marshal_as<string>(" " + g[i].get_Soluongton().ToString()) + marshal_as<string>(" " + g[i].get_Gianhap().ToString()) + marshal_as<string>(" " + g[i].get_Giaxuat().ToString());
+			String^ th = gcnew String(x.c_str());
+			MessageBox::Show(th);
+			x = "";
 		}
+
 		/*
 		SqlConnection^ connect = gcnew SqlConnection("Data Source = DESKTOP-F4R2928\\MSSQLSERVER01;Initial Catalog = QuanLyBanHang;Integrated Security = true");
 		connect->Open();
@@ -325,5 +359,7 @@ namespace QuanLyBanHang {
 		}
 		*/
 	}
+private: System::Void listView_Goods_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }

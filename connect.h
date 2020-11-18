@@ -22,7 +22,9 @@ class Loaihang
 		Loaihang() :Tenloaihang(""), Maloaihang("") {}
 		Loaihang(string Tenloaihang, string Maloaihang) : Tenloaihang(Tenloaihang), Maloaihang(Maloaihang) {}
 		void set_Tenloaihang(string Tenloaihang) { this->Tenloaihang = Tenloaihang; }
+		void set_Maloaihang(string Maloaihang) { this->Maloaihang = Maloaihang; }
 		string get_Tenloaihang() { return this->Tenloaihang; }
+		virtual string get_Maloaihang() { return this->Maloaihang; }
 };
 
 class Mathang:protected Loaihang
@@ -83,14 +85,13 @@ class Mathang:protected Loaihang
 		void set_Soluongton(int Soluongton) { this->Soluongton = Soluongton; }
 		void set_Gianhap(double Gianhap) { this->Gianhap = Gianhap; }
 		void set_Giaxuat(double Giaxuat) { this->Giaxuat = Giaxuat; }
+		void set_Maloaihang(string Maloaihang) { this->Maloaihang = Maloaihang; }
+		void set_Mahang(string Mahang) { this->Mahang = Mahang; }
+		
 		string get_Tenhang() { return Tenhang; }
 		int get_Soluongton() { return Soluongton; }
 		double get_Gianhap() { return this->Gianhap; }
-		double fet_Giaxuat() { return this->Giaxuat; }
+		double get_Giaxuat() { return this->Giaxuat; }
+		string get_Maloaihang() { return this->Maloaihang; }
+		string get_Mahang() { return this->Mahang; }
 };
-typedef struct good
-{
-		int n;
-		Mathang* head;
-		good* next;
-}goods;
