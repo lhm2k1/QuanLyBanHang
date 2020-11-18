@@ -31,7 +31,17 @@ namespace QuanLyBanHang
 		}
 
 	public:
+		void Connection(string query)
+		{
+			SqlConnection^ connect = gcnew SqlConnection("Data Source = DESKTOP-F4R2928\\MSSQLSERVER01;Initial Catalog = QuanLyBanHang;Integrated Security = true");
+			connect->Open();
 
+			SqlCommand^ command = gcnew SqlCommand(("SELECT Susername from Sign_up"), connect);
+			SqlDataAdapter^ adapter = gcnew SqlDataAdapter(command);
+			DataSet^ dataset = gcnew DataSet();
+			adapter->Fill(dataset, "tmptable");
+			DataTable^ table = dataset->Tables["tmptable"];
+		}
 	public:
 
 	private: System::Windows::Forms::ContextMenuStrip^ contextMenuStrip1;
@@ -197,6 +207,7 @@ namespace QuanLyBanHang
 			// 
 			// panel_menu_sign_up
 			// 
+			this->panel_menu_sign_up->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->panel_menu_sign_up->BackColor = System::Drawing::Color::Transparent;
 			this->panel_menu_sign_up->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel_menu_sign_up.BackgroundImage")));
 			this->panel_menu_sign_up->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -211,22 +222,24 @@ namespace QuanLyBanHang
 			this->panel_menu_sign_up->Controls->Add(this->buttonBack);
 			this->panel_menu_sign_up->Controls->Add(this->ButtonRegister);
 			this->panel_menu_sign_up->Controls->Add(this->labelSIGNUP);
-			this->panel_menu_sign_up->Location = System::Drawing::Point(288, 60);
+			this->panel_menu_sign_up->Location = System::Drawing::Point(291, 63);
 			this->panel_menu_sign_up->Name = L"panel_menu_sign_up";
-			this->panel_menu_sign_up->Size = System::Drawing::Size(256, 331);
+			this->panel_menu_sign_up->Size = System::Drawing::Size(253, 328);
 			this->panel_menu_sign_up->TabIndex = 0;
 			this->panel_menu_sign_up->Visible = false;
 			// 
 			// txt_Confirmpass_Signup
 			// 
+			this->txt_Confirmpass_Signup->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->txt_Confirmpass_Signup->BackColor = System::Drawing::SystemColors::AppWorkspace;
 			this->txt_Confirmpass_Signup->Location = System::Drawing::Point(108, 185);
 			this->txt_Confirmpass_Signup->Name = L"txt_Confirmpass_Signup";
-			this->txt_Confirmpass_Signup->Size = System::Drawing::Size(120, 20);
+			this->txt_Confirmpass_Signup->Size = System::Drawing::Size(117, 20);
 			this->txt_Confirmpass_Signup->TabIndex = 18;
 			// 
 			// label_Confirmpass_Signup
 			// 
+			this->label_Confirmpass_Signup->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->label_Confirmpass_Signup->AutoSize = true;
 			this->label_Confirmpass_Signup->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
@@ -239,14 +252,16 @@ namespace QuanLyBanHang
 			// 
 			// txt_Username_Signup
 			// 
+			this->txt_Username_Signup->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->txt_Username_Signup->BackColor = System::Drawing::SystemColors::AppWorkspace;
 			this->txt_Username_Signup->Location = System::Drawing::Point(108, 120);
 			this->txt_Username_Signup->Name = L"txt_Username_Signup";
-			this->txt_Username_Signup->Size = System::Drawing::Size(120, 20);
+			this->txt_Username_Signup->Size = System::Drawing::Size(117, 20);
 			this->txt_Username_Signup->TabIndex = 16;
 			// 
 			// label_Username_Signup
 			// 
+			this->label_Username_Signup->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->label_Username_Signup->AutoSize = true;
 			this->label_Username_Signup->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
@@ -259,6 +274,7 @@ namespace QuanLyBanHang
 			// 
 			// label_Email_Signup
 			// 
+			this->label_Email_Signup->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->label_Email_Signup->AutoSize = true;
 			this->label_Email_Signup->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
@@ -271,23 +287,26 @@ namespace QuanLyBanHang
 			// 
 			// txt_Password_Signup
 			// 
+			this->txt_Password_Signup->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->txt_Password_Signup->BackColor = System::Drawing::SystemColors::AppWorkspace;
 			this->txt_Password_Signup->Location = System::Drawing::Point(108, 152);
 			this->txt_Password_Signup->Name = L"txt_Password_Signup";
-			this->txt_Password_Signup->Size = System::Drawing::Size(120, 20);
+			this->txt_Password_Signup->Size = System::Drawing::Size(117, 20);
 			this->txt_Password_Signup->TabIndex = 13;
 			// 
 			// txt_Email_Signup
 			// 
+			this->txt_Email_Signup->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->txt_Email_Signup->BackColor = System::Drawing::SystemColors::AppWorkspace;
 			this->txt_Email_Signup->ForeColor = System::Drawing::SystemColors::WindowText;
 			this->txt_Email_Signup->Location = System::Drawing::Point(108, 84);
 			this->txt_Email_Signup->Name = L"txt_Email_Signup";
-			this->txt_Email_Signup->Size = System::Drawing::Size(120, 20);
+			this->txt_Email_Signup->Size = System::Drawing::Size(117, 20);
 			this->txt_Email_Signup->TabIndex = 12;
 			// 
 			// label_Password_Signup
 			// 
+			this->label_Password_Signup->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->label_Password_Signup->AutoSize = true;
 			this->label_Password_Signup->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
@@ -300,6 +319,7 @@ namespace QuanLyBanHang
 			// 
 			// buttonBack
 			// 
+			this->buttonBack->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->buttonBack->BackColor = System::Drawing::Color::Transparent;
 			this->buttonBack->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonBack.BackgroundImage")));
 			this->buttonBack->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -307,7 +327,7 @@ namespace QuanLyBanHang
 			this->buttonBack->ImageActive = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonBack.ImageActive")));
 			this->buttonBack->Location = System::Drawing::Point(3, 3);
 			this->buttonBack->Name = L"buttonBack";
-			this->buttonBack->Size = System::Drawing::Size(44, 35);
+			this->buttonBack->Size = System::Drawing::Size(41, 32);
 			this->buttonBack->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->buttonBack->TabIndex = 8;
 			this->buttonBack->TabStop = false;
@@ -321,6 +341,7 @@ namespace QuanLyBanHang
 			this->ButtonRegister->ActiveFillColor = System::Drawing::Color::DarkGreen;
 			this->ButtonRegister->ActiveForecolor = System::Drawing::Color::WhiteSmoke;
 			this->ButtonRegister->ActiveLineColor = System::Drawing::Color::SeaGreen;
+			this->ButtonRegister->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->ButtonRegister->BackColor = System::Drawing::Color::Transparent;
 			this->ButtonRegister->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"ButtonRegister.BackgroundImage")));
 			this->ButtonRegister->ButtonText = L"Register";
@@ -336,13 +357,14 @@ namespace QuanLyBanHang
 			this->ButtonRegister->Location = System::Drawing::Point(60, 239);
 			this->ButtonRegister->Margin = System::Windows::Forms::Padding(5);
 			this->ButtonRegister->Name = L"ButtonRegister";
-			this->ButtonRegister->Size = System::Drawing::Size(114, 39);
+			this->ButtonRegister->Size = System::Drawing::Size(111, 36);
 			this->ButtonRegister->TabIndex = 3;
 			this->ButtonRegister->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			this->ButtonRegister->Click += gcnew System::EventHandler(this, &Log_in::ButtonRegister_Click);
 			// 
 			// labelSIGNUP
 			// 
+			this->labelSIGNUP->Anchor = System::Windows::Forms::AnchorStyles::Top;
 			this->labelSIGNUP->AutoSize = true;
 			this->labelSIGNUP->Font = (gcnew System::Drawing::Font(L"Algerian", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -355,6 +377,7 @@ namespace QuanLyBanHang
 			// 
 			// panel_menu_login
 			// 
+			this->panel_menu_login->Anchor = System::Windows::Forms::AnchorStyles::None;
 			this->panel_menu_login->BackColor = System::Drawing::Color::Transparent;
 			this->panel_menu_login->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"panel_menu_login.BackgroundImage")));
 			this->panel_menu_login->BackgroundImageLayout = System::Windows::Forms::ImageLayout::Stretch;
@@ -365,13 +388,16 @@ namespace QuanLyBanHang
 			this->panel_menu_login->Controls->Add(this->linkSignup);
 			this->panel_menu_login->Controls->Add(this->buttonSignin);
 			this->panel_menu_login->Controls->Add(this->lableLOGIN);
-			this->panel_menu_login->Location = System::Drawing::Point(285, 60);
+			this->panel_menu_login->Location = System::Drawing::Point(291, 63);
 			this->panel_menu_login->Name = L"panel_menu_login";
 			this->panel_menu_login->Size = System::Drawing::Size(256, 331);
 			this->panel_menu_login->TabIndex = 3;
 			// 
 			// label_Username_Login
 			// 
+			this->label_Username_Login->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->label_Username_Login->AutoSize = true;
 			this->label_Username_Login->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
@@ -384,6 +410,9 @@ namespace QuanLyBanHang
 			// 
 			// txtPassword_Login
 			// 
+			this->txtPassword_Login->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->txtPassword_Login->BackColor = System::Drawing::SystemColors::AppWorkspace;
 			this->txtPassword_Login->Location = System::Drawing::Point(92, 162);
 			this->txtPassword_Login->Name = L"txtPassword_Login";
@@ -393,6 +422,9 @@ namespace QuanLyBanHang
 			// 
 			// txtUsername_Login
 			// 
+			this->txtUsername_Login->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->txtUsername_Login->BackColor = System::Drawing::SystemColors::AppWorkspace;
 			this->txtUsername_Login->ForeColor = System::Drawing::SystemColors::WindowText;
 			this->txtUsername_Login->Location = System::Drawing::Point(92, 105);
@@ -402,6 +434,9 @@ namespace QuanLyBanHang
 			// 
 			// label_Password_Login
 			// 
+			this->label_Password_Login->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->label_Password_Login->AutoSize = true;
 			this->label_Password_Login->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular,
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
@@ -414,6 +449,9 @@ namespace QuanLyBanHang
 			// 
 			// linkSignup
 			// 
+			this->linkSignup->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->linkSignup->AutoSize = true;
 			this->linkSignup->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -423,7 +461,7 @@ namespace QuanLyBanHang
 			this->linkSignup->TabIndex = 5;
 			this->linkSignup->TabStop = true;
 			this->linkSignup->Text = L"Sign up";
-			this->linkSignup->LinkClicked += gcnew System::Windows::Forms::LinkLabelLinkClickedEventHandler(this, &Log_in::linkSignup_LinkClicked_1);
+			this->linkSignup->LinkClicked += gcnew System::Windows::Forms::LinkLabelLinkClickedEventHandler(this, &Log_in::linkSignup_LinkClicked);
 			// 
 			// buttonSignin
 			// 
@@ -432,6 +470,9 @@ namespace QuanLyBanHang
 			this->buttonSignin->ActiveFillColor = System::Drawing::Color::DarkGreen;
 			this->buttonSignin->ActiveForecolor = System::Drawing::Color::WhiteSmoke;
 			this->buttonSignin->ActiveLineColor = System::Drawing::Color::SeaGreen;
+			this->buttonSignin->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->buttonSignin->BackColor = System::Drawing::Color::Transparent;
 			this->buttonSignin->BackgroundImage = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"buttonSignin.BackgroundImage")));
 			this->buttonSignin->ButtonText = L"Sign in";
@@ -454,6 +495,9 @@ namespace QuanLyBanHang
 			// 
 			// lableLOGIN
 			// 
+			this->lableLOGIN->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->lableLOGIN->AutoSize = true;
 			this->lableLOGIN->Font = (gcnew System::Drawing::Font(L"Algerian", 26.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
@@ -489,7 +533,7 @@ namespace QuanLyBanHang
 
 		}
 #pragma endregion
-	private: System::Void linkSignup_LinkClicked_1(System::Object^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^ e)//link sign up
+	private: System::Void linkSignup_LinkClicked(System::Object^ sender, System::Windows::Forms::LinkLabelLinkClickedEventArgs^ e)//link sign up
 	{
 		this->panel_menu_sign_up->Visible = true;
 		this->panel_menu_login->Visible = false;
@@ -537,7 +581,7 @@ namespace QuanLyBanHang
 					this->Hide();
 					Loged_in^ f = gcnew Loged_in();
 					f->ShowDialog();
-					this->Close();
+					this->Show();
 					return;
 				}
 			}

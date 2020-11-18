@@ -15,3 +15,4 @@ C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.pdb
 C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\Bunifu_UI_v1.52.dll
 C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.Loged_in.resources
 C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.Goods.resources
+C:\Users\ASUS\Documents\Do_an_Ky_III\QuanLyBanHang\Debug\QuanLyBanHang.Bill.resources

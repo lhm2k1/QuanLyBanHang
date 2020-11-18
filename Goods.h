@@ -1,8 +1,9 @@
 ﻿#pragma once
 #include <string>
-#include <string>
+#include <msclr\marshal_cppstd.h>
+#include "connect.h"
 namespace QuanLyBanHang {
-
+	using namespace msclr::interop;
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -114,7 +115,7 @@ namespace QuanLyBanHang {
 			// comboBox_Goods_Sort
 			// 
 			this->comboBox_Goods_Sort->BackColor = System::Drawing::Color::Silver;
-			this->comboBox_Goods_Sort->FormattingEnabled = true;
+			this->comboBox_Goods_Sort->FormatString = L"string";
 			this->comboBox_Goods_Sort->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
 				L"Sort By Amount", L"Sort By Export Price",
 					L"Sort By Import Price", L"Sort By Name"
@@ -178,9 +179,9 @@ namespace QuanLyBanHang {
 			this->listView_Goods->FullRowSelect = true;
 			this->listView_Goods->GridLines = true;
 			this->listView_Goods->HideSelection = false;
-			this->listView_Goods->Location = System::Drawing::Point(14, 13);
+			this->listView_Goods->Location = System::Drawing::Point(3, 18);
 			this->listView_Goods->Name = L"listView_Goods";
-			this->listView_Goods->Size = System::Drawing::Size(607, 371);
+			this->listView_Goods->Size = System::Drawing::Size(631, 367);
 			this->listView_Goods->TabIndex = 0;
 			this->listView_Goods->UseCompatibleStateImageBehavior = false;
 			this->listView_Goods->View = System::Windows::Forms::View::Details;
@@ -188,7 +189,7 @@ namespace QuanLyBanHang {
 			// GoodName
 			// 
 			this->GoodName->Text = L"GoodName";
-			this->GoodName->Width = 234;
+			this->GoodName->Width = 255;
 			// 
 			// GoodsCode
 			// 
@@ -267,21 +268,20 @@ namespace QuanLyBanHang {
 		DataTable^ table = dataset->Tables["tmptable"];
 		if (comboBox_Goods_Sort->Text->ToString() == "Sort By Name")// bubblesort
 		{
-			for (int i = 0; i < table->Rows->Count; i++)
+/*			for (int i = 0; i < table->Rows->Count; i++)
 			{
 				for (int j = table->Rows->Count - 1; j > i; j--)
 				{
 					if(table->Rows[j]->ItemArray[0]->ToString()->CompareTo(table->Rows[j-1]->ItemArray[0]) > 0);
 					{
 						DataRow^ tmp = table->Rows[j];
-						for (int k = 0; k < 6; k++)
+						for (int k = 0; k < table->Columns->Count; k++)
 							table->Rows[j]->ItemArray[k] = table->Rows[j-1]->ItemArray[k];
-						for (int k = 0; k < 6; k++)
+						for (int k = 0; k < table->Columns->Count; k++)
 							table->Rows[j-1]->ItemArray[k] = tmp->ItemArray[k];							
 					}
 				}
-			}
-				
+			}*/
 //			for(int i = 0; i < table->Rows->Count; i++)
 //				for (int j = 0; j < 6; j++)
 //					MessageBox::Show(table->Rows[i]->ItemArray[j]->ToString());
@@ -292,9 +292,38 @@ namespace QuanLyBanHang {
 				{
 					listView_Goods->Items[i]->SubItems->Add(table->Rows[i]->ItemArray[j]->ToString());
 				}
-					
 			}
 		}
+		goods *g = new goods();
+		//for (int i = 0; i < table->Rows->Count; i++)
+		{
+			String^ name = gcnew String(table->Rows[0]->ItemArray[0]->ToString());
+			string n = marshal_as<string>(name);
+			g->head->set_Tenhang(n);
+			String^ m = gcnew String(g->head->get_Tenhang().c_str());
+			MessageBox::Show(m);
+		}
+		/*
+		SqlConnection^ connect = gcnew SqlConnection("Data Source = DESKTOP-F4R2928\\MSSQLSERVER01;Initial Catalog = QuanLyBanHang;Integrated Security = true");
+		connect->Open();
+
+		SqlCommand^ command = gcnew SqlCommand("SELECT Tenhang, Mahang, Tenloaihang, Soluongton, Gianhap, Giaxuat FROM Mathang, Loaihang WHERE Mathang.MaLoaihang = Loaihang.Maloaihang", connect);
+		SqlDataAdapter^ adapter = gcnew SqlDataAdapter(command);
+		DataSet^ dataset = gcnew DataSet();
+		adapter->Fill(dataset, "tmptable");
+		connect->Close();
+		DataTable^ table = dataset->Tables["tmptable"];
+
+		goods* g = new goods[table->Rows->Count] ;
+		for (int i = 0; i < table->Rows->Count; i++)
+		{
+			String^ name = gcnew String(table->Rows[i]->ItemArray[0]->ToString());
+			string n = marshal_as<string>(name);
+			g[i].head->set_Tenhang(n);
+			String^ m = gcnew String(g[i].head->get_Tenhang().c_str());
+			MessageBox::Show(m);
+		}
+		*/
 	}
 };
 }
