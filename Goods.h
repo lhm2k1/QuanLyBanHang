@@ -117,16 +117,16 @@ namespace QuanLyBanHang {
 			// 
 			this->comboBox_Goods_Sort->BackColor = System::Drawing::Color::Silver;
 			this->comboBox_Goods_Sort->FormatString = L"string";
-			this->comboBox_Goods_Sort->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
-				L"Sort By Amount", L"Sort By Export Price",
-					L"Sort By Import Price", L"Sort By Name"
+			this->comboBox_Goods_Sort->Items->AddRange(gcnew cli::array< System::Object^  >(6) {
+				L"Sort By Amount", L"Sort By Category",
+					L"Sort By Export Price", L"Sort By GoodCode", L"Sort By Import Price", L"Sort By Name"
 			});
 			this->comboBox_Goods_Sort->Location = System::Drawing::Point(640, 18);
 			this->comboBox_Goods_Sort->Name = L"comboBox_Goods_Sort";
 			this->comboBox_Goods_Sort->Size = System::Drawing::Size(121, 21);
 			this->comboBox_Goods_Sort->Sorted = true;
 			this->comboBox_Goods_Sort->TabIndex = 5;
-			this->comboBox_Goods_Sort->Text = L"None";
+			this->comboBox_Goods_Sort->Text = L"Sort By Name";
 			this->comboBox_Goods_Sort->SelectedIndexChanged += gcnew System::EventHandler(this, &Goods::comboBox_Goods_Sort_SelectedIndexChanged);
 			// 
 			// button_Goods_Exit
@@ -170,12 +170,14 @@ namespace QuanLyBanHang {
 			// 
 			// listView_Goods
 			// 
+			this->listView_Goods->AutoArrange = false;
 			this->listView_Goods->BackColor = System::Drawing::Color::LightGray;
 			this->listView_Goods->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->listView_Goods->Columns->AddRange(gcnew cli::array< System::Windows::Forms::ColumnHeader^  >(6) {
 				this->GoodName, this->GoodsCode,
 					this->Category, this->Amount, this->ImportPrice, this->ExportPrice
 			});
+			this->listView_Goods->Cursor = System::Windows::Forms::Cursors::Hand;
 			this->listView_Goods->ForeColor = System::Drawing::SystemColors::WindowFrame;
 			this->listView_Goods->FullRowSelect = true;
 			this->listView_Goods->GridLines = true;
@@ -186,12 +188,11 @@ namespace QuanLyBanHang {
 			this->listView_Goods->TabIndex = 0;
 			this->listView_Goods->UseCompatibleStateImageBehavior = false;
 			this->listView_Goods->View = System::Windows::Forms::View::Details;
-			this->listView_Goods->SelectedIndexChanged += gcnew System::EventHandler(this, &Goods::listView_Goods_SelectedIndexChanged);
 			// 
 			// GoodName
 			// 
 			this->GoodName->Text = L"GoodName";
-			this->GoodName->Width = 255;
+			this->GoodName->Width = 228;
 			// 
 			// GoodsCode
 			// 
@@ -203,7 +204,7 @@ namespace QuanLyBanHang {
 			// 
 			this->Category->Text = L"Category";
 			this->Category->TextAlign = System::Windows::Forms::HorizontalAlignment::Center;
-			this->Category->Width = 77;
+			this->Category->Width = 109;
 			// 
 			// Amount
 			// 
@@ -268,98 +269,294 @@ namespace QuanLyBanHang {
 		adapter->Fill(dataset, "tmptable");
 		connect->Close();
 		DataTable^ table = dataset->Tables["tmptable"];
-		if (comboBox_Goods_Sort->Text->ToString() == "Sort By Name")// bubblesort
+//sort by name
+		if (comboBox_Goods_Sort->Text->ToString() == "Sort By Name")
 		{
-/*			for (int i = 0; i < table->Rows->Count; i++)
+			if (table->Rows->Count > 0)
+			{
+				listView_Goods->Items->Clear();
+			}
+			Mathang* g = new Mathang[table->Rows->Count];
+		// convert data and get data
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				g[i].set_Tenhang(marshal_as<string>(table->Rows[i]->ItemArray[0]->ToString()));
+				g[i].set_Mahang(marshal_as<string>(table->Rows[i]->ItemArray[1]->ToString()));
+				g[i].set_Maloaihang(marshal_as<string>(table->Rows[i]->ItemArray[2]->ToString()));
+				g[i].set_Soluongton(atoi(marshal_as<string>(table->Rows[i]->ItemArray[3]->ToString()).c_str()));
+				g[i].set_Gianhap(atof(marshal_as<string>(table->Rows[i]->ItemArray[4]->ToString()).c_str()));
+				g[i].set_Giaxuat(atof(marshal_as<string>(table->Rows[i]->ItemArray[5]->ToString()).c_str()));
+			}
+		// sort data in *g
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				for (int j = table->Rows->Count-1; j > i; j--)
+				{
+					if (g[j - 1].get_Tenhang() > g[j].get_Tenhang())
+					{
+						Mathang tmp = g[j];
+						g[j] = g[j - 1];
+						g[j - 1] = tmp;
+					}
+				}
+			}
+		// add data from *g to  lisviewgoods
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				String^ name = gcnew String(g[i].get_Tenhang().c_str());
+				listView_Goods->Items->Add(name); delete name;
+				
+				name = gcnew String(g[i].get_Mahang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				name = gcnew String(g[i].get_Maloaihang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				listView_Goods->Items[i]->SubItems->Add( g[i].get_Soluongton().ToString() );
+				listView_Goods->Items[i]->SubItems->Add( g[i].get_Gianhap().ToString() );
+				listView_Goods->Items[i]->SubItems->Add( g[i].get_Giaxuat().ToString() );
+			}
+		}
+//sort by Export price
+		if (comboBox_Goods_Sort->Text->ToString() == "Sort By Export Price")
+		{
+			if (table->Rows->Count > 0)
+			{
+				listView_Goods->Items->Clear();
+			}
+			Mathang* g = new Mathang[table->Rows->Count];
+			// convert data and get data
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				g[i].set_Tenhang(marshal_as<string>(table->Rows[i]->ItemArray[0]->ToString()));
+				g[i].set_Mahang(marshal_as<string>(table->Rows[i]->ItemArray[1]->ToString()));
+				g[i].set_Maloaihang(marshal_as<string>(table->Rows[i]->ItemArray[2]->ToString()));
+				g[i].set_Soluongton(atoi(marshal_as<string>(table->Rows[i]->ItemArray[3]->ToString()).c_str()));
+				g[i].set_Gianhap(atof(marshal_as<string>(table->Rows[i]->ItemArray[4]->ToString()).c_str()));
+				g[i].set_Giaxuat(atof(marshal_as<string>(table->Rows[i]->ItemArray[5]->ToString()).c_str()));
+			}
+			// sort data in *g
+			for (int i = 0; i < table->Rows->Count; i++)
 			{
 				for (int j = table->Rows->Count - 1; j > i; j--)
 				{
-					if(table->Rows[j]->ItemArray[0]->ToString()->CompareTo(table->Rows[j-1]->ItemArray[0]) > 0);
+					if (g[j - 1].get_Giaxuat() > g[j].get_Giaxuat())
 					{
-						DataRow^ tmp = table->Rows[j];
-						for (int k = 0; k < table->Columns->Count; k++)
-							table->Rows[j]->ItemArray[k] = table->Rows[j-1]->ItemArray[k];
-						for (int k = 0; k < table->Columns->Count; k++)
-							table->Rows[j-1]->ItemArray[k] = tmp->ItemArray[k];							
+						Mathang tmp = g[j];
+						g[j] = g[j - 1];
+						g[j - 1] = tmp;
 					}
 				}
-			}*/
-//			for(int i = 0; i < table->Rows->Count; i++)
-//				for (int j = 0; j < 6; j++)
-//					MessageBox::Show(table->Rows[i]->ItemArray[j]->ToString());
+			}
+			// add data from *g to  lisviewgoods
 			for (int i = 0; i < table->Rows->Count; i++)
 			{
-				listView_Goods->Items->Add(table->Rows[i]->ItemArray[0]->ToString());
-				for (int j = 1; j < table->Columns->Count; j++)
-				{
-					listView_Goods->Items[i]->SubItems->Add(table->Rows[i]->ItemArray[j]->ToString());
-				}
+				String^ name = gcnew String(g[i].get_Tenhang().c_str());
+				listView_Goods->Items->Add(name); delete name;
+
+				name = gcnew String(g[i].get_Mahang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				name = gcnew String(g[i].get_Maloaihang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Soluongton().ToString());
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Gianhap().ToString());
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Giaxuat().ToString());
 			}
 		}
-//		Mathang* g = new Mathang[table->Rows->Count];
-//		Mathang g;
-//		String^ s = "";
-//		g[0].set_Tenhang(marshal_as<string>(table->Rows[0]->ItemArray[0]->ToString()));//s = gcnew String(g.get_Tenhang().c_str());
-//			MessageBox::Show(s);
-
-//		g[0].set_Mahang(marshal_as<string>(table->Rows[0]->ItemArray[1]->ToString()));// s = gcnew String(g.get_Mahang().c_str());
-//			MessageBox::Show(s);
-
-//		g[0].set_Maloaihang(marshal_as<string>(table->Rows[0]->ItemArray[2]->ToString()));// s = gcnew String(g.get_Maloaihang().c_str());
-//			MessageBox::Show(s);
-
-//		g[0].set_Soluongton(atoi(marshal_as<string>(table->Rows[0]->ItemArray[3]->ToString()).c_str()));
-//			MessageBox::Show(g.get_Soluongton().ToString());
-
-//		g[0].set_Gianhap( atof(marshal_as<string>(table->Rows[0]->ItemArray[4]->ToString()).c_str()));
-//			MessageBox::Show(g.get_Gianhap().ToString());
-
-//		g[0].set_Giaxuat(atof(marshal_as<string>(table->Rows[0]->ItemArray[5]->ToString()).c_str()));
-//			MessageBox::Show(g.get_Giaxuat().ToString());
-//		string x = "";
-//		x += g[0].get_Tenhang() + " " + g[0].get_Mahang() + " " + g[0].get_Maloaihang() + marshal_as<string>(" " + g[0].get_Soluongton().ToString() ) + marshal_as<string>(" " + g[0].get_Gianhap().ToString()) + marshal_as<string>(" " + g[0].get_Giaxuat().ToString());
-//		String^ th = gcnew String(x.c_str());
-//		MessageBox::Show(th);
-		Mathang* g = new Mathang[table->Rows->Count];
-		string x = "";
-		for (int i = 0; i < table->Rows->Count; i++)
+//sort by import price
+		if (comboBox_Goods_Sort->Text->ToString() == "Sort By Import Price")
 		{
-			g[i].set_Tenhang(marshal_as<string>(table->Rows[i]->ItemArray[0]->ToString()));
-			g[i].set_Mahang(marshal_as<string>(table->Rows[i]->ItemArray[1]->ToString()));
-			g[i].set_Maloaihang(marshal_as<string>(table->Rows[i]->ItemArray[2]->ToString()));
-			g[i].set_Soluongton(atoi(marshal_as<string>(table->Rows[i]->ItemArray[3]->ToString()).c_str()));
-			g[i].set_Gianhap(atof(marshal_as<string>(table->Rows[i]->ItemArray[4]->ToString()).c_str()));
-			g[i].set_Giaxuat(atof(marshal_as<string>(table->Rows[i]->ItemArray[5]->ToString()).c_str()));
+			if (table->Rows->Count > 0)
+			{
+				listView_Goods->Items->Clear();
+			}
+			Mathang* g = new Mathang[table->Rows->Count];
+			// convert data and get data
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				g[i].set_Tenhang(marshal_as<string>(table->Rows[i]->ItemArray[0]->ToString()));
+				g[i].set_Mahang(marshal_as<string>(table->Rows[i]->ItemArray[1]->ToString()));
+				g[i].set_Maloaihang(marshal_as<string>(table->Rows[i]->ItemArray[2]->ToString()));
+				g[i].set_Soluongton(atoi(marshal_as<string>(table->Rows[i]->ItemArray[3]->ToString()).c_str()));
+				g[i].set_Gianhap(atof(marshal_as<string>(table->Rows[i]->ItemArray[4]->ToString()).c_str()));
+				g[i].set_Giaxuat(atof(marshal_as<string>(table->Rows[i]->ItemArray[5]->ToString()).c_str()));
+			}
+			// sort data in *g
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				for (int j = table->Rows->Count - 1; j > i; j--)
+				{
+					if (g[j - 1].get_Gianhap() > g[j].get_Gianhap())
+					{
+						Mathang tmp = g[j];
+						g[j] = g[j - 1];
+						g[j - 1] = tmp;
+					}
+				}
+			}
+			// add data from *g to  lisviewgoods
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				String^ name = gcnew String(g[i].get_Tenhang().c_str());
+				listView_Goods->Items->Add(name); delete name;
 
-			x += g[i].get_Tenhang() + " " + g[i].get_Mahang() + " " + g[i].get_Maloaihang() + marshal_as<string>(" " + g[i].get_Soluongton().ToString()) + marshal_as<string>(" " + g[i].get_Gianhap().ToString()) + marshal_as<string>(" " + g[i].get_Giaxuat().ToString());
-			String^ th = gcnew String(x.c_str());
-			MessageBox::Show(th);
-			x = "";
+				name = gcnew String(g[i].get_Mahang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				name = gcnew String(g[i].get_Maloaihang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Soluongton().ToString());
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Gianhap().ToString());
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Giaxuat().ToString());
+			}
 		}
-
-		/*
-		SqlConnection^ connect = gcnew SqlConnection("Data Source = DESKTOP-F4R2928\\MSSQLSERVER01;Initial Catalog = QuanLyBanHang;Integrated Security = true");
-		connect->Open();
-
-		SqlCommand^ command = gcnew SqlCommand("SELECT Tenhang, Mahang, Tenloaihang, Soluongton, Gianhap, Giaxuat FROM Mathang, Loaihang WHERE Mathang.MaLoaihang = Loaihang.Maloaihang", connect);
-		SqlDataAdapter^ adapter = gcnew SqlDataAdapter(command);
-		DataSet^ dataset = gcnew DataSet();
-		adapter->Fill(dataset, "tmptable");
-		connect->Close();
-		DataTable^ table = dataset->Tables["tmptable"];
-
-		goods* g = new goods[table->Rows->Count] ;
-		for (int i = 0; i < table->Rows->Count; i++)
+//sort by Amount
+		if (comboBox_Goods_Sort->Text->ToString() == "Sort By Amount")
 		{
-			String^ name = gcnew String(table->Rows[i]->ItemArray[0]->ToString());
-			string n = marshal_as<string>(name);
-			g[i].head->set_Tenhang(n);
-			String^ m = gcnew String(g[i].head->get_Tenhang().c_str());
-			MessageBox::Show(m);
+			if (table->Rows->Count > 0)
+			{
+				listView_Goods->Items->Clear();
+			}
+			Mathang* g = new Mathang[table->Rows->Count];
+			// convert data and get data
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				g[i].set_Tenhang(marshal_as<string>(table->Rows[i]->ItemArray[0]->ToString()));
+				g[i].set_Mahang(marshal_as<string>(table->Rows[i]->ItemArray[1]->ToString()));
+				g[i].set_Maloaihang(marshal_as<string>(table->Rows[i]->ItemArray[2]->ToString()));
+				g[i].set_Soluongton(atoi(marshal_as<string>(table->Rows[i]->ItemArray[3]->ToString()).c_str()));
+				g[i].set_Gianhap(atof(marshal_as<string>(table->Rows[i]->ItemArray[4]->ToString()).c_str()));
+				g[i].set_Giaxuat(atof(marshal_as<string>(table->Rows[i]->ItemArray[5]->ToString()).c_str()));
+			}
+			// sort data in *g
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				for (int j = table->Rows->Count - 1; j > i; j--)
+				{
+					if (g[j - 1].get_Soluongton() > g[j].get_Soluongton())
+					{
+						Mathang tmp = g[j];
+						g[j] = g[j - 1];
+						g[j - 1] = tmp;
+					}
+				}
+			}
+			// add data from *g to  lisviewgoods
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				String^ name = gcnew String(g[i].get_Tenhang().c_str());
+				listView_Goods->Items->Add(name); delete name;
+
+				name = gcnew String(g[i].get_Mahang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				name = gcnew String(g[i].get_Maloaihang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Soluongton().ToString());
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Gianhap().ToString());
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Giaxuat().ToString());
+			}
 		}
-		*/
+//sort by GoodsCode
+		if (comboBox_Goods_Sort->Text->ToString() == "Sort By GoodCode")
+		{
+			if (table->Rows->Count > 0)
+			{
+				listView_Goods->Items->Clear();
+			}
+			Mathang* g = new Mathang[table->Rows->Count];
+			// convert data and get data
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				g[i].set_Tenhang(marshal_as<string>(table->Rows[i]->ItemArray[0]->ToString()));
+				g[i].set_Mahang(marshal_as<string>(table->Rows[i]->ItemArray[1]->ToString()));
+				g[i].set_Maloaihang(marshal_as<string>(table->Rows[i]->ItemArray[2]->ToString()));
+				g[i].set_Soluongton(atoi(marshal_as<string>(table->Rows[i]->ItemArray[3]->ToString()).c_str()));
+				g[i].set_Gianhap(atof(marshal_as<string>(table->Rows[i]->ItemArray[4]->ToString()).c_str()));
+				g[i].set_Giaxuat(atof(marshal_as<string>(table->Rows[i]->ItemArray[5]->ToString()).c_str()));
+			}
+			// sort data in *g
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				for (int j = table->Rows->Count - 1; j > i; j--)
+				{
+					if (g[j - 1].get_Mahang() > g[j].get_Mahang())
+					{
+						Mathang tmp = g[j];
+						g[j] = g[j - 1];
+						g[j - 1] = tmp;
+					}
+				}
+			}
+			// add data from *g to  lisviewgoods
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				String^ name = gcnew String(g[i].get_Tenhang().c_str());
+				listView_Goods->Items->Add(name); delete name;
+
+				name = gcnew String(g[i].get_Mahang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				name = gcnew String(g[i].get_Maloaihang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Soluongton().ToString());
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Gianhap().ToString());
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Giaxuat().ToString());
+			}
+		}
+//sort by Category
+		if (comboBox_Goods_Sort->Text->ToString() == "Sort By Category")
+		{
+			if (table->Rows->Count > 0)
+			{
+				listView_Goods->Items->Clear();
+			}
+			Mathang* g = new Mathang[table->Rows->Count];
+			// convert data and get data
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				g[i].set_Tenhang(marshal_as<string>(table->Rows[i]->ItemArray[0]->ToString()));
+				g[i].set_Mahang(marshal_as<string>(table->Rows[i]->ItemArray[1]->ToString()));
+				g[i].set_Maloaihang(marshal_as<string>(table->Rows[i]->ItemArray[2]->ToString()));
+				g[i].set_Soluongton(atoi(marshal_as<string>(table->Rows[i]->ItemArray[3]->ToString()).c_str()));
+				g[i].set_Gianhap(atof(marshal_as<string>(table->Rows[i]->ItemArray[4]->ToString()).c_str()));
+				g[i].set_Giaxuat(atof(marshal_as<string>(table->Rows[i]->ItemArray[5]->ToString()).c_str()));
+			}
+			// sort data in *g
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				for (int j = table->Rows->Count - 1; j > i; j--)
+				{
+					if (g[j - 1].get_Maloaihang() < g[j].get_Maloaihang())
+					{
+						Mathang tmp = g[j];
+						g[j] = g[j - 1];
+						g[j - 1] = tmp;
+					}
+				}
+			}
+			// add data from *g to  lisviewgoods
+			for (int i = 0; i < table->Rows->Count; i++)
+			{
+				String^ name = gcnew String(g[i].get_Tenhang().c_str());
+				listView_Goods->Items->Add(name); delete name;
+
+				name = gcnew String(g[i].get_Mahang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				name = gcnew String(g[i].get_Maloaihang().c_str());
+				listView_Goods->Items[i]->SubItems->Add(name); delete name;
+
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Soluongton().ToString());
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Gianhap().ToString());
+				listView_Goods->Items[i]->SubItems->Add(g[i].get_Giaxuat().ToString());
+			}
+		}
 	}
-private: System::Void listView_Goods_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-}
 };
 }
