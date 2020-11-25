@@ -3,6 +3,7 @@
 #include "Bill.h"
 #include <string>
 #include "Log_in.h"
+#include "Employee.h"
 namespace QuanLyBanHang
 {
 
@@ -259,6 +260,7 @@ private: System::Windows::Forms::MonthCalendar^ monthCalendar1;
 			this->exportBillToolStripMenuItem->Name = L"exportBillToolStripMenuItem";
 			this->exportBillToolStripMenuItem->Size = System::Drawing::Size(137, 22);
 			this->exportBillToolStripMenuItem->Text = L"Export Bill";
+			this->exportBillToolStripMenuItem->Click += gcnew System::EventHandler(this, &Loged_in::exportBillToolStripMenuItem_Click);
 			// 
 			// ToolStripMenu_Goods
 			// 
@@ -276,6 +278,7 @@ private: System::Windows::Forms::MonthCalendar^ monthCalendar1;
 			this->ToolStripMenu_Employees->Name = L"ToolStripMenu_Employees";
 			this->ToolStripMenu_Employees->Size = System::Drawing::Size(86, 21);
 			this->ToolStripMenu_Employees->Text = L"Employees";
+			this->ToolStripMenu_Employees->Click += gcnew System::EventHandler(this, &Loged_in::ToolStripMenu_Employees_Click);
 			// 
 			// ToolStripMenu_Report
 			// 
@@ -325,7 +328,7 @@ private: System::Windows::Forms::MonthCalendar^ monthCalendar1;
 			});
 			this->menuStrip_Homepage->Location = System::Drawing::Point(283, 1);
 			this->menuStrip_Homepage->Name = L"menuStrip_Homepage";
-			this->menuStrip_Homepage->Size = System::Drawing::Size(254, 25);
+			this->menuStrip_Homepage->Size = System::Drawing::Size(374, 25);
 			this->menuStrip_Homepage->TabIndex = 0;
 			this->menuStrip_Homepage->Text = L"menuStrip_Homepage";
 			// 
@@ -425,6 +428,20 @@ private: System::Windows::Forms::MonthCalendar^ monthCalendar1;
 	private: System::Void button_Logout_Click(System::Object^ sender, System::EventArgs^ e)
 	{
 		this->Close();
+	}
+	private: System::Void exportBillToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		this->Hide();
+		Bill^ f = gcnew Bill();
+		f->ShowDialog();
+		this->Show();
+	}
+	private: System::Void ToolStripMenu_Employees_Click(System::Object^ sender, System::EventArgs^ e)
+	{
+		this->Hide();
+		Employee^ f = gcnew Employee();
+		f->ShowDialog();
+		this->Show();
 	}
 };
 }

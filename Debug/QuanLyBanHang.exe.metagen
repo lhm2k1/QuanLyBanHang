@@ -1,4 +1,5 @@
   QuanLyBanHang.Bill.resources - Embedded, ContainedInManifestFile, 
+  QuanLyBanHang.Employee.resources - Embedded, ContainedInManifestFile, 
   QuanLyBanHang.Goods.resources - Embedded, ContainedInManifestFile, 
   QuanLyBanHang.Loged_in.resources - Embedded, ContainedInManifestFile, 
   QuanLyBanHang.Log_in.resources - Embedded, ContainedInManifestFile, 
@@ -22,7 +23,12 @@ Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c5619
 Class QuanLyBanHang.Goods: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Methods:
+    TABLE(String, DataSet): PrivateScope, Public, HideBySig
 Class QuanLyBanHang.Bill: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class QuanLyBanHang.Employee: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class QuanLyBanHang.Loged_in: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit

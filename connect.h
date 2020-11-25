@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <utility>
 
 using namespace std;
 using namespace System;
@@ -11,6 +12,7 @@ using namespace System::Data;
 using namespace System::Drawing;
 using namespace System::Data::SqlClient;
 using namespace System::Data;
+
 
 class Loaihang
 {

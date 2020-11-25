@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Loged_in.h"
+#include "DBHeader.h"
 namespace QuanLyBanHang
 {
 
@@ -44,7 +45,7 @@ namespace QuanLyBanHang
 		}
 	public:
 
-	private: System::Windows::Forms::ContextMenuStrip^ contextMenuStrip1;
+
 
 
 
@@ -141,6 +142,14 @@ namespace QuanLyBanHang
 
 
 
+
+
+
+
+
+
+
+
 	private: System::ComponentModel::IContainer^ components;
 
 
@@ -177,7 +186,6 @@ namespace QuanLyBanHang
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = (gcnew System::ComponentModel::Container());
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(Log_in::typeid));
 			this->panel_menu_sign_up = (gcnew System::Windows::Forms::Panel());
 			this->txt_Confirmpass_Signup = (gcnew System::Windows::Forms::TextBox());
@@ -199,7 +207,6 @@ namespace QuanLyBanHang
 			this->linkSignup = (gcnew System::Windows::Forms::LinkLabel());
 			this->buttonSignin = (gcnew Bunifu::Framework::UI::BunifuThinButton2());
 			this->lableLOGIN = (gcnew System::Windows::Forms::Label());
-			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->panel_menu_sign_up->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->buttonBack))->BeginInit();
 			this->panel_menu_login->SuspendLayout();
@@ -508,11 +515,6 @@ namespace QuanLyBanHang
 			this->lableLOGIN->TabIndex = 0;
 			this->lableLOGIN->Text = L"LOG IN";
 			// 
-			// contextMenuStrip1
-			// 
-			this->contextMenuStrip1->Name = L"contextMenuStrip1";
-			this->contextMenuStrip1->Size = System::Drawing::Size(61, 4);
-			// 
 			// Log_in
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -589,11 +591,11 @@ namespace QuanLyBanHang
 			MessageBox::Show("Log in failed!\nWrong username or password!");
 			return;
 		}
-			
 
-		
 
-		
+
+
+
 	}
 	private: System::Void ButtonRegister_Click(System::Object^ sender, System::EventArgs^ e)//button Register
 	{
@@ -617,7 +619,7 @@ namespace QuanLyBanHang
 					return;
 				}
 
-			SqlCommand^ cmd = gcnew SqlCommand(("INSERT INTO Sign_up VALUES ('" + txt_Username_Signup->Text->ToString()+"','"+txt_Password_Signup->Text->ToString()+"','"+txt_Email_Signup->Text->ToString()+"')"), connect);
+			SqlCommand^ cmd = gcnew SqlCommand(("INSERT INTO Sign_up VALUES ('" + txt_Username_Signup->Text->ToString() + "','" + txt_Password_Signup->Text->ToString() + "','" + txt_Email_Signup->Text->ToString() + "')"), connect);
 			cmd->ExecuteReader();
 			connect->Close();
 			MessageBox::Show("Register Successfully!");
@@ -629,5 +631,19 @@ namespace QuanLyBanHang
 			return;
 		}
 	}
+	//private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e)
+	//{
+	//	DAL_Signup^ dal= gcnew DAL_Signup("Data Source = DESKTOP-F4R2928\\MSSQLSERVER01;Initial Catalog = QuanLyBanHang;Integrated Security = true");
+	//	String^ query = gcnew String("select * from dbo.Sign_up");
+
+	//	MessageBox::Show(dal->GetListSU(query)->Count.ToString());
+	//	MessageBox::Show(dal->GetListSU(query)[1]->Username);
+	//	/*for (int i = 0; i < dal->GetListSU(query)->Count; i++)
+	//	{
+	//		dataGridView1->Rows[i]->Cells[0]->Value = dal->GetListSU(query)[i]->Username;
+	//		dataGridView1->Rows[i]->Cells[1]->Value = dal->GetListSU(query)[i]->Password;
+	//		dataGridView1->Rows[i]->Cells[2]->Value = dal->GetListSU(query)[i]->Gmail;
+	//	}*/
+	//}
 };
 }
